@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ClassController;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -23,18 +24,35 @@ Route::get('/' , function (){
     return view('home');
 });
 
+
+
 //login and Register
+
+Route::group(['middleware'=>'guest'],function(){
 Route::get('/dashboard/reg',[RegisterController::class, 'reg'])->name('dashboard.reg');
+
 Route::post('/dashboard/register',[RegisterController::class, 'register'])->name('dashboard.register');
 
 Route::get('/dashboard/log',[LoginController::class, 'log'])->name('dashboard.log');
 Route::post('/dashboard/login',[LoginController::class, 'login'])->name('dashboard.login');
 
+});
 
-Auth::routes();
+// Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 
 Route::get('/home/dashboard',[HomeController::class, 'index'])->name('dashboard');
+
+//dashboard2
+Route::get('/dashboard/teachers',[TeacherController::class, 'dashboard'])->name('dashboard.teachers');
+
+//dashboard3
+
+Route::get('/dashboard/students',[StudentController::class, 'dashboard'])->name('dashboard.students');
+
+
+
+Route::get('/dashboard/logout',[HomeController::class, 'logout'])->name('dashboard.logout');
 
 //students
 Route::get('/students/create',[StudentController::class, 'create'])->name('students.create');
@@ -58,4 +76,5 @@ Route::get('/teachers',[TeacherController::class, 'index'])->name('teachers');
 //classes
 Route::get('/classes/create',[ClassController::class,  'create'])->name('classes.create');
 Route::post('/classes/store',[ClassController::class, 'store'])->name('classes.store');
+Route::get('/classes',[ClassController::class, 'index'])->name('classes');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -13,11 +14,18 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function dashboard(){
+
+        $users =  User::all();
+        return view('dashboard3',compact('users'));
+
+    }
+
+     public function index()
     {
         //
-        $students = Student::all();
-
+            $students = Student::all();
          return view('admin.students.index',compact('students'));
 
     }
@@ -46,8 +54,6 @@ class StudentController extends Controller
             'name'=> 'required',
             'roll_no'=>'required',
             'email' => 'required|email',
-            'class'=> 'required',
-            'section'=> 'required',
         ]);
         $photo = $request->photo;
      $photo_new_name = time().$photo->getClientOriginalName();
@@ -61,8 +67,6 @@ class StudentController extends Controller
             'photo'=> 'uploads/students/' . $photo_new_name,
             'email'=>$request->email,
             'user_id'=>Auth::id(),
-            'class'=>$request->class,
-            'section'=>$request->section
 
         ]);
 
@@ -113,8 +117,6 @@ class StudentController extends Controller
             'roll_no'=>'required',
             'email' => 'required|email',
             'address'=>'required',
-            'class'=> 'required',
-            'section'=> 'required',
         ]);
 
 
@@ -135,8 +137,7 @@ class StudentController extends Controller
         $students->name = $request->name;
         $students->roll_no = $request->roll_no;
         $students->email = $request->email;
-        $students->class = $request->class;
-        $students->section = $request->section;
+
         $students->save();
 
         flash("Student Data has been Updated Successfully");

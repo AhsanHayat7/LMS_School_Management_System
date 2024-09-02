@@ -22,7 +22,7 @@
                 placeholder="Roll No" name="roll_no" required>
             <label for="roll_no">Roll Number</label>
         </div>
-        
+
         <div class="form-floating mb-3">
             <input type="text" class="form-control"
                 placeholder="address" name="address" required>
@@ -33,16 +33,7 @@
                 placeholder="Name@example.com"  name="email" required>
             <label for="floatingInput">Email address</label>
         </div>
-        <div class="form-floating mb-3">
-            <input type="integer" class="form-control"
-                placeholder="Class" name="class" required>
-            <label for="Class">Class</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control"
-                placeholder="Section" name="section" required>
-            <label for="Section">Section</label>
-        </div>
+      
         <div class="form-group text-center">
             <button class="btn btn-success" type="submit">Create New Student</button>
         </div>

@@ -47,7 +47,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="{{ route('login') }}" class="">
+                            <a href="{{ route('dashboard.reg') }}" class="">
                                 <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
                             </a>
                             <h3>Sign Up</h3>
@@ -76,11 +76,11 @@
                             <br>
                             <div class="form-group">
                                 <div class="form-check">
-                                @foreach($permissions as $permission)
+                                @foreach($roles as $role)
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="role_id" value = {{$permission->id}} >
+                                        <input class="form-check-input" type="radio" name="role_id" value = {{$role->id}} >
                                         <label class="form-check-label" for="role">
-                                            {{$permission->name}}
+                                            {{$role->name}}
                                         </label>
                                     </div>
                                 @endforeach
@@ -109,7 +109,7 @@
                                 <label for="password-confirm">Confirm Password</label>
                             </div>
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
-                            <p class="text-center mb-0">Already have an Account? <a href="{{ route('login') }}">Sign In</a></p>
+                            <p class="text-center mb-0">Already have an Account? <a href="{{ route('dashboard.reg') }}">Sign In</a></p>
                         </form>
                     </div>
                 </div>

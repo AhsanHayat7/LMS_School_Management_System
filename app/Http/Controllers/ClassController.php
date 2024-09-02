@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Classes;
 use App\Models\Student;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class ClassController extends Controller
@@ -16,6 +17,10 @@ class ClassController extends Controller
     public function index()
     {
         //
+
+        $classes = Classes::all();
+
+         return view('admin.classes.index',compact('classes'));
     }
 
     /**

@@ -36,7 +36,7 @@
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Classes</a>
         <div class="dropdown-menu bg-transparent border-0">
             <a href="{{route('classes.create')}}" class="dropdown-item">New Classes</a>
-            <a href="#" class="dropdown-item">See All Classes</a>
+            <a href="{{route('classes')}}" class="dropdown-item">See All Classes</a>
 
         </div>
     </div>

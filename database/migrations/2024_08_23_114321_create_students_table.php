@@ -21,8 +21,6 @@ class CreateStudentsTable extends Migration
             $table->string('address');
             $table->text('photo')->nullable();
             $table->integer('user_id');
-            $table->integer('class');
-            $table->string('section');
             $table->timestamps();
         });
     }

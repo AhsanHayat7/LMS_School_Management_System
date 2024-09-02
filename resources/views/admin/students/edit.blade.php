@@ -32,16 +32,6 @@
                 placeholder="Name@example.com"  name="email"  value={{$students->email}} required>
             <label for="floatingInput">Email address</label>
         </div>
-        <div class="form-floating mb-3">
-            <input type="integer" class="form-control"
-                placeholder="Class" name="class" value={{$students->class}} required>
-            <label for="Class">Class</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control"
-                placeholder="Section" name="section" value={{$students->section}} required>
-            <label for="Section">Section</label>
-        </div>
         <div class="form-group text-center">
             <button class="btn btn-success" type="submit">New Student</button>
         </div>

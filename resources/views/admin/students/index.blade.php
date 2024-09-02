@@ -21,8 +21,6 @@
                     <th scope="col">Roll No</th>
                     <th scope="col">Email</th>
                     <th scope="col">Address</th>
-                    <th scope="col">Class</th>
-                    <th scope="col">Section</th>
                     <th scope="col">Editing</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -51,10 +49,6 @@
                     <td>{{$student->address}}</td>
 
 
-                    <td>{{$student->class}}</td>
-
-
-                    <td>{{$student->section}}</td>
 
                     <td><a href="{{ route('students.edit', ['id' =>$student->id]) }}" class="btn btn-xs btn-info">Edit</a>
                         <span class="glyphicon  glyphicon-pencil"></span>

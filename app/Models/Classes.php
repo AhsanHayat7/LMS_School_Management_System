@@ -12,10 +12,10 @@ class Classes extends Model
 
 
     public function students(){
-        return $this->belongsTo(Student::class);
+        return $this->hasMany(Student::class, 'role_id');
     }
 
     public function teachers(){
-        return $this->belongsTo(Teacher::class);
+        return $this->hasMany(Teacher::class, 'role_id');
     }
 }

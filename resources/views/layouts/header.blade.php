@@ -21,11 +21,7 @@
                 <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                     <a href="#" class="dropdown-item">My Profile</a>
                     <a href="#" class="dropdown-item">Settings</a>
-                    <a href="{{ route('logout') }}" class="dropdown-item"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                    <a href="{{ route('dashboard.logout') }}" class="dropdown-item">Log Out</a>
                 </div>
             </div>
         @else

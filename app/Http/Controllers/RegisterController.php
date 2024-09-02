@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Permission;
+use App\Models\role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    //
 
 
     public function reg(){
-        $permissions  = Permission::all();
-        return view('auth.register',compact('permissions'));
+        $roles  = Role::all();
+        return view('auth.register',compact('roles'));
     }
 
 
@@ -37,8 +36,15 @@ class RegisterController extends Controller
         ]);
 
         Auth::loginUsingId($user->id);
+        if(Auth::user()->role_id == 1){
+            return redirect()->route('dashboard');
+   }
+       elseif( Auth::user()->role_id == 2 ){
+           return redirect()->route('dashboard.students');
+   }
+       elseif(Auth ::user()->role_id == 3){
+           return redirect()->route('dashboard.teachers');
+       }
 
-
-        return redirect()->route('dashboard');
     }
 }

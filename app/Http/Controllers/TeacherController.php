@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -12,7 +13,13 @@ class TeacherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function dashboard(){
+            $users = User::all();
+        return view('dashboard2',compact('users'));
+    }
+
+     public function index()
     {
         //
         $teachers = Teacher::all();

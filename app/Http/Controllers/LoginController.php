@@ -16,6 +16,7 @@ class LoginController extends Controller
     }
 
     public function login(Request $request){
+
         $request->validate([
             'email'=> 'required',
             'password'=> 'required'
@@ -23,10 +24,17 @@ class LoginController extends Controller
 
         if(\Auth::attempt($request->only('email','password'))){
 
-            
-
-            return redirect()->route('dashboard');
+            if(Auth::user()->role_id == 1){
+                 return redirect()->route('dashboard');
         }
-        return redirect('login')->withError('Login details are not valid');
+            elseif( Auth::user()->role_id == 2 ){
+                return redirect()->route('dashboard.students');
+        }
+            elseif(Auth ::user()->role_id == 3){
+                return redirect()->route('dashboard.teachers');
+            }
+
+    }
+        return redirect()->route('dashboard.log');
     }
 }
