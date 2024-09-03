@@ -35,6 +35,6 @@ class LoginController extends Controller
             }
 
     }
-        return redirect()->route('dashboard.log');
+        return redirect()->route('dashboard.log')->withError("PLease Register or SignUp the Dashboard.");
     }
 }

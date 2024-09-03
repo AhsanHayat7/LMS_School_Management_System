@@ -26,36 +26,36 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($teachers as $teacher)
+                @foreach ($users as $user)
 
 
                 <tr>
 
                     <td>
-                        <a data-fancybox="Teacher-images" href="{{ asset($teacher->images) }}">
-                            <img src="{{ asset($teacher->images) }}" alt="{{ $teacher->name }}" style="max-width: 100px;">
+                        <a data-fancybox="Teacher-images" href="{{ asset($user->images) }}">
+                            <img src="{{ asset($user->images) }}" alt="{{ $user->name }}" style="max-width: 100px;">
                         </a>
                     </t>
 
 
-                    <td>{{$teacher->name}}</td>
+                    <td>{{$user->name}}</td>
 
 
-                    <td>{{$teacher->cnic}}</td>
+                    <td>{{$user->cnic}}</td>
 
 
-                    <td>{{$teacher->email}}</td>
+                    <td>{{$user->email}}</td>
 
-                    <td>{{$teacher->mobile}}</td>
-
-
+                    <td>{{$user->mobile_no}}</td>
 
 
-                    <td><a href="{{ route('teachers.edit', ['id' =>$teacher->id]) }}" class="btn btn-xs btn-info">Edit</a>
+
+
+                    <td><a href="{{ route('teachers.edit', ['id' =>$user->id]) }}" class="btn btn-xs btn-info">Edit</a>
                         <span class="glyphicon  glyphicon-pencil"></span>
                     </td>
 
-                      <td><a href="{{ route('teachers.delete', ['id' => $teacher->id]) }}" class="btn btn-xs btn-danger">Delete</a>
+                      <td><a href="{{ route('teachers.delete', ['id' => $user->id]) }}" class="btn btn-xs btn-danger">Delete</a>
                             <span class="glyphicon  glyphicon-trash"></span>
                 </td>
                 </tr>

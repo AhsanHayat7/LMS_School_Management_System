@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -25,8 +26,8 @@ class StudentController extends Controller
      public function index()
     {
         //
-            $students = Student::all();
-         return view('admin.students.index',compact('students'));
+            $users = User::where('role_id' ,2)->get();
+         return view('admin.students.index',compact('users'));
 
     }
 
@@ -50,23 +51,30 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
+        
+
         $this->validate($request,[
             'name'=> 'required',
             'roll_no'=>'required',
             'email' => 'required|email',
+            'role_id'=> 'required',
+            'password'=> 'required|confirmed',
+            'images' => 'required'
+
         ]);
-        $photo = $request->photo;
-     $photo_new_name = time().$photo->getClientOriginalName();
+        $images = $request->images;
+        $image_new_name = time().$images->getClientOriginalName();
 
-     $photo->move('uploads/students',$photo_new_name);
+        $images->move('uploads/students',$image_new_name);
 
-        $students = Student::create([
+        $users = User::create([
             'name' => $request->name,
             'roll_no'=>$request->roll_no,
             'address'=>$request->address,
-            'photo'=> 'uploads/students/' . $photo_new_name,
+            'images'=> 'uploads/students/' . $image_new_name,
+            'password'=>Hash::make($request->password),
             'email'=>$request->email,
-            'user_id'=>Auth::id(),
+            'role_id'=>$request->role_id,
 
         ]);
 
@@ -96,9 +104,9 @@ class StudentController extends Controller
     public function edit($id)
     {
         //
-        $students = Student::find($id);
+        $users = User::find($id);
 
-        return view('admin.students.edit',compact('students'));
+        return view('admin.students.edit',compact('users'));
 
     }
 
@@ -112,33 +120,28 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[
-            'name'=> 'required',
-            'roll_no'=>'required',
-            'email' => 'required|email',
-            'address'=>'required',
-        ]);
 
-
-        $students = Student::find($id);
-        if($request->hasFile("photo"))
+        $users = User::find($id);
+        if($request->hasFile("images"))
         {
 
-            $photo = $request->photo;
+            $images = $request->images;
 
-            $photo_new_name = time() .  $photo->getClientOriginalName();
+            $images_new_name = time() .  $images->getClientOriginalName();
 
-            $photo->move('uploads/students/',$photo_new_name);
+            $images->move('uploads/students/',$images_new_name);
 
-            $students->photo = 'uploads/students/'. $photo_new_name;
+            $users->images = 'uploads/students/'. $images_new_name;
 
         }
 
-        $students->name = $request->name;
-        $students->roll_no = $request->roll_no;
-        $students->email = $request->email;
+        $users->name = $request->name;
+        $users->roll_no = $request->roll_no;
+        $users->email = $request->email;
+        $users->password = Hash::make($request->password);
+        $users->address =  $request->address;
 
-        $students->save();
+        $users->save();
 
         flash("Student Data has been Updated Successfully");
 
@@ -159,8 +162,8 @@ class StudentController extends Controller
     {
         //
 
-        $students = Student::find($id);
-        $students->delete();
+        $users = User::find($id);
+        $users->delete();
 
 
         flash('Student Data Deleted Successfully');

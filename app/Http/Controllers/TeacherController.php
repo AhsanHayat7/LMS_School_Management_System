@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,8 @@ class TeacherController extends Controller
      public function index()
     {
         //
-        $teachers = Teacher::all();
-         return view('admin.teachers.index',compact('teachers'));
+        $users = User::where('role_id', 3)->get();
+         return view('admin.teachers.index',compact('users'));
     }
 
     /**
@@ -34,9 +35,9 @@ class TeacherController extends Controller
     public function create()
     {
         //
-        $teachers = Teacher::all();
+        $users = User::all();
 
-        return view('admin.teachers.create',compact('teachers'));
+        return view('admin.teachers.create',compact('users'));
     }
 
     /**
@@ -52,22 +53,25 @@ class TeacherController extends Controller
             'name'=> 'required',
             'cnic'=> 'required',
             'email' => 'required|email',
-            'mobile'=> 'required',
+            'mobile_no'=> 'required',
+            'role_id'=> 'required',
+            'password'=> 'required|confirmed'
         ]);
 
-        $image = $request->image;
-        $image_new_name = time().$image->getClientOriginalName();
+        $images = $request->images;
+        $image_new_name = time().$images->getClientOriginalName();
 
-        $image->move('uploads/teachers',$image_new_name);
+        $images->move('uploads/teachers',$image_new_name);
 
-           $teachers = Teacher::create([
+           $users = User::create([
                'name' => $request->name,
                'cnic'=>$request->cnic,
                'email'=>$request->email,
                'images'=> 'uploads/teachers/' . $image_new_name,
                'email'=>$request->email,
-               'user_id'=>Auth::id(),
-               'mobile'=>$request->mobile
+               'password'=>Hash::make($request->password),
+               'mobile_no'=>$request->mobile_no,
+               'role_id'=>$request->role_id
 
            ]);
 
@@ -100,8 +104,8 @@ class TeacherController extends Controller
     public function edit($id)
     {
         //
-        $teachers = Teacher::find($id);
-         return view('admin.teachers.edit',compact('teachers'));
+        $users = User::find($id);
+         return view('admin.teachers.edit',compact('users'));
     }
 
     /**
@@ -114,15 +118,8 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[
-            'name'=> 'required',
-            'cnic'=> 'required',
-            'email' => 'required|email',
-            'mobile'=> 'required',
-        ]);
 
-
-        $teachers = Teacher::find($id);
+        $users = User::find($id);
         if($request->hasFile("images"))
         {
 
@@ -132,15 +129,16 @@ class TeacherController extends Controller
 
             $images->move('uploads/teachers/',$images_new_name);
 
-            $teachers->images = 'uploads/teachers/'. $images_new_name;
+            $users->images = 'uploads/teachers/'. $images_new_name;
 
         }
 
-        $teachers->name = $request->name;
-        $teachers->cnic = $request->cnic;
-        $teachers->email = $request->email;
-        $teachers->mobile = $request->mobile;
-        $teachers->save();
+        $users->name = $request->name;
+        $users->cnic = $request->cnic;
+        $users->email = $request->email;
+        $users->mobile_no = $request->mobile_no;
+        $users->password = Hash::make($request->password);
+        $users->save();
 
         flash("Teacher Data has been Updated Successfully");
 
@@ -158,8 +156,8 @@ class TeacherController extends Controller
     public function destroy($id)
     {
         //
-        $teachers = Teacher::find($id);
-        $teachers->delete();
+        $users = User::find($id);
+        $users->delete();
 
         flash('Teachers Data Deleted Successfully');
         return redirect()->back();
