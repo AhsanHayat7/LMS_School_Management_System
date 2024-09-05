@@ -9,10 +9,10 @@
 
 <!-- Table Start -->
 <div class="container-fluid pt-4 px-4">
-<div class="col-sm-12 col-xl-6">
+<div class="col-sm-12 col-xl-8">
     <div class="bg-secondary rounded h-100 p-4">
         <h6 class="mb-4">Teachers</h6>
-        <table class="table table-dark">
+        <table class="table table-dark" >
             <thead>
 
                 <tr>
@@ -21,6 +21,9 @@
                     <th scope="col">CNIC</th>
                     <th scope="col">Email</th>
                     <th scope="col">Mobile</th>
+                    <th scope="col">Taught Class</th>
+                    <th scope="col">Taught Section</th>
+                    <th scope="col">Select Classes</th>
                     <th scope="col">Editing</th>
                     <th scope="col">Delete</th>
                 </tr>
@@ -48,8 +51,14 @@
 
                     <td>{{$user->mobile_no}}</td>
 
+                    <td>{{$user->class}}</td>
+
+                    <td>{{$user->section}}</td>
 
 
+                    <td><a href="{{ route('class.edit', ['id' =>$user->id]) }}" class="btn btn-xs btn-info">SelectClass</a>
+                        <span class="glyphicon  glyphicon-pencil"></span>
+                    </td>
 
                     <td><a href="{{ route('teachers.edit', ['id' =>$user->id]) }}" class="btn btn-xs btn-info">Edit</a>
                         <span class="glyphicon  glyphicon-pencil"></span>

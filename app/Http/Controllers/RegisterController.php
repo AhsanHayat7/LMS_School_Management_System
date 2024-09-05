@@ -36,15 +36,15 @@ class RegisterController extends Controller
         ]);
 
         Auth::loginUsingId($user->id);
-        if(Auth::user()->role_id == 1){
+        if(Auth::user()->role_id){
             return redirect()->route('dashboard');
    }
-       elseif( Auth::user()->role_id == 2 ){
-           return redirect()->route('dashboard.students');
-   }
-       elseif(Auth ::user()->role_id == 3){
-           return redirect()->route('dashboard.teachers');
-       }
+//        elseif( Auth::user()->role_id == 2 ){
+//            return redirect()->route('dashboard.students');
+//    }
+//        elseif(Auth ::user()->role_id == 3){
+//            return redirect()->route('dashboard.teachers');
+//        }
 
     }
 }

@@ -6,9 +6,12 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\SubjectController;
 use App\Models\Teacher;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Matcher\Subset;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,7 +42,7 @@ Route::post('/dashboard/login',[LoginController::class, 'login'])->name('dashboa
 });
 
 // Auth::routes();
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','admin']], function () {
 
 Route::get('/home/dashboard',[HomeController::class, 'index'])->name('dashboard');
 
@@ -54,6 +57,8 @@ Route::get('/dashboard/students',[StudentController::class, 'dashboard'])->name(
 
 Route::get('/dashboard/logout',[HomeController::class, 'logout'])->name('dashboard.logout');
 
+
+Route::group(['middleware' => ['auth','student']], function () {
 //students
 Route::get('/students/create',[StudentController::class, 'create'])->name('students.create');
 Route::post('/students/store',[StudentController::class, 'store'])->name('students.store');
@@ -62,6 +67,10 @@ Route::post('/students/update/{id}',[StudentController::class,  'update'])->name
 Route::get('/students',[StudentController::class, 'index'])->name('students');
 Route::get('/students/delete/{id}',[StudentController::class, 'destroy'])->name('students.delete');
 
+});
+
+
+Route::group(['middleware' => ['auth','teacher']], function () {
 
 //Teacher
 Route::get('/teachers/create',[TeacherController::class, 'create'])->name('teachers.create');
@@ -72,9 +81,28 @@ Route::get('/teachers/delete/{id}',[TeacherController::class, 'destroy'])->name(
 Route::get('/teachers',[TeacherController::class, 'index'])->name('teachers');
 
 
-
+});
 //classes
-Route::get('/classes/create',[ClassController::class,  'create'])->name('classes.create');
-Route::post('/classes/store',[ClassController::class, 'store'])->name('classes.store');
+
+Route::get('/classes/edit/{id}',[ClassController::class, 'edit'])->name('class.edit');
+Route::get('/classes/delete/{id}',[ClassController::class,  'destroy'])->name('class.delete');
+
+// // Route::get('/classes/create',[ClassController::class,  'create'])->name('classes.create');
+// Route::post('/classes/store',[ClassController::class, 'store'])->name('classes.store');
 Route::get('/classes',[ClassController::class, 'index'])->name('classes');
+Route::get('/classes/teachers',[ClassController::class, 'index2'])->name('teachers.classes');
+Route::post('/classes/update/{id}',[ClassController::class, 'update'])->name('classes.update');
+
+
+//subjects
+
+Route::get('/subjects',[SubjectController::class,  'index'])->name('subjects');
+
+Route::get('/subjects/edit/{id}',[SubjectController::class,  'edit'])->name('subjects.edit');
+
+Route::post('/subjects/update/{id}',[SubjectController::class,  'update'])->name('subjects.update');
+
+Route::get('/subjects/delete/{id}',[SubjectController::class,  'destroy'])->name('subjects.delete');
+
+
 });

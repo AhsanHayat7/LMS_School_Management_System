@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
-class ClassController extends Controller
+use Illuminate\Http\Request;
+use App\Models\User;
+class SubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +14,9 @@ class ClassController extends Controller
     public function index()
     {
         //
-
         $users = User::all();
 
-         return view('admin.classes.index',compact('users',));
-    }
-
-    public function  index2(){
-        $users = User::all();
-        return view('admin.classes.index2',compact('users'));
-
+        return view('admin.subjects.index',compact('users'));
     }
 
     /**
@@ -35,8 +27,6 @@ class ClassController extends Controller
     public function create()
     {
         //
-
-        return view('admin.classes.create');
     }
 
     /**
@@ -48,26 +38,6 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         //
-        // dd($request->all());
-
-        $this->validate($request,[
-            'class'=> 'required',
-            'section'=> 'required',
-        ]);
-
-
-
-
-        $uers = User::create([
-            'class'=> $request->class,
-            'section'=> $request->section,
-
-        ]);
-
-
-        flash('Classes Data Has Been Stored Successfully.');
-
-            return redirect()->back();
     }
 
     /**
@@ -90,11 +60,10 @@ class ClassController extends Controller
     public function edit($id)
     {
         //
-        $users = User::find($id);
+        $users =  User::find($id);
 
-        return view('admin.classes.edit',compact('users'));
+        return view('admin.subjects.edit',compact('users'));
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -107,18 +76,20 @@ class ClassController extends Controller
     {
         //
 
-
         $users = User::find($id);
 
-        $users->class = $request->class;
-        $users->section = $request->section;
-
+        $users->subject = $request->subjects;
         $users->save();
 
-        flash("Classes has been Updated Successfully");
+        flash("Subjects has been Updated Successfully");
 
 
         return redirect()->route('students');
+
+
+
+
+
     }
 
     /**
@@ -130,12 +101,10 @@ class ClassController extends Controller
     public function destroy($id)
     {
         //
+
         $users = User::find($id);
         $users->delete();
-
-        flash('Students Data Deleted Successfully');
-        return redirect()->route('classes');
+        flash("Subjects has been Deleted Successfully");
+        return redirect()->route('subjects');
     }
-
-
 }

@@ -16,7 +16,7 @@
             <thead>
 
                 <tr>
-                    <th scope="col">Student Name</th>
+                    <th scope="col">Teacher Name</th>
                     <th scope="col">Class</th>
                     <th scope="col">Section</th>
                     <th scope="col">Editing</th>
@@ -25,7 +25,7 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    @if($user->role_id == 2)
+                    @if($user->role_id == 3)
 
                         <tr>
 

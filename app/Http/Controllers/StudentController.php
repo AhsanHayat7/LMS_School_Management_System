@@ -16,6 +16,10 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     public function _construct(){
+        $this->middleware(['auth','student']);
+     }
+
     public function dashboard(){
 
         $users =  User::all();
@@ -26,7 +30,7 @@ class StudentController extends Controller
      public function index()
     {
         //
-            $users = User::where('role_id' ,2)->get();
+            $users = User::students()->get();
          return view('admin.students.index',compact('users'));
 
     }
@@ -51,7 +55,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         //
-        
+
 
         $this->validate($request,[
             'name'=> 'required',
@@ -109,6 +113,8 @@ class StudentController extends Controller
         return view('admin.students.edit',compact('users'));
 
     }
+
+
 
     /**
      * Update the specified resource in storage.

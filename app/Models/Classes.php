@@ -8,14 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Classes extends Model
 {
     use HasFactory;
-    protected $fillable = ['class','student_id','section','teacher_id'];
+    protected $fillable = ['class','section',];
 
+   
 
-    public function students(){
-        return $this->hasMany(Student::class, 'user_id');
-    }
-
-    public function teachers(){
-        return $this->hasMany(Teacher::class, 'user_id');
-    }
 }

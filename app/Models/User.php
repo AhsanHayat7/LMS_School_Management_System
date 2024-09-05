@@ -56,9 +56,13 @@ class User extends Authenticatable
 
 
 
-
     public function role(){
         return $this->belongsTo(Role::class);
+    }
+
+    public function scopeStudents()
+    {
+        return $this->where('role_id',2);
     }
 
 }

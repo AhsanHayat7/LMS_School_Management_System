@@ -35,9 +35,9 @@ class TeacherController extends Controller
     public function create()
     {
         //
-        $users = User::all();
 
-        return view('admin.teachers.create',compact('users'));
+
+        return view('admin.teachers.create');
     }
 
     /**
