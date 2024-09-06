@@ -16,7 +16,7 @@ class Student
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->role_id == 1 || auth()->user()->role_id == 2 ){
+        if(auth()->user()->role_id == 2 ){
             return $next($request);
         }
         abort(401);

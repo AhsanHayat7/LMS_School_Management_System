@@ -15,11 +15,17 @@ class TeacherController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+
     public function dashboard(){
             $users = User::all();
         return view('dashboard2',compact('users'));
     }
 
+    public function teach(){
+        $users = User::where('id', Auth::user()->id)->get();
+        return view('admin.teachers.index2',compact('users'));
+    }
      public function index()
     {
         //

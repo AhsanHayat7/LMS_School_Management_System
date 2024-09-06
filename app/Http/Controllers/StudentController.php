@@ -16,9 +16,17 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function _construct(){
-        $this->middleware(['auth','student']);
-     }
+    //  public function _construct(){
+    //     $this->middleware(['auth','student']);
+    //  }
+
+
+
+    public function student(){
+
+        $users = User::where('id', Auth:: user()->id)->get();
+        return view('admin.students.index2',compact('users'));
+    }
 
     public function dashboard(){
 
@@ -45,6 +53,7 @@ class StudentController extends Controller
         //
         return view('admin.students.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -114,6 +123,12 @@ class StudentController extends Controller
 
     }
 
+    public function make($id){
+        $users =  User::find($id);
+
+        return view('admin.students.edit2',compact('users'));
+    }
+
 
 
     /**
@@ -153,6 +168,41 @@ class StudentController extends Controller
 
 
         return redirect()->route('students');
+
+
+
+    }
+
+    public function studentupdate(Request $request, $id)
+    {
+        //
+
+        $users = User::find($id);
+        if($request->hasFile("images"))
+        {
+
+            $images = $request->images;
+
+            $images_new_name = time() .  $images->getClientOriginalName();
+
+            $images->move('uploads/students/',$images_new_name);
+
+            $users->images = 'uploads/students/'. $images_new_name;
+
+        }
+
+        $users->name = $request->name;
+        $users->roll_no = $request->roll_no;
+        $users->email = $request->email;
+        $users->password = Hash::make($request->password);
+        $users->address =  $request->address;
+
+        $users->save();
+
+        flash("Student Data has been Updated Successfully");
+
+
+        return redirect()->route('dashboard.update.s');
 
 
 

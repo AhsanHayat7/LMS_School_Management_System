@@ -5,9 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 class HomeController extends Controller
-{    public function _construct(){
-            $this->middleware(['auth','admin']);
- }
+{
 
     public function index()
     {
@@ -21,6 +19,12 @@ class HomeController extends Controller
             \Auth::logout();
             return redirect('');
 
+    }
+
+    public function home (){
+
+        $users = User::all();
+        return view('home',compact('users'));
     }
 
 

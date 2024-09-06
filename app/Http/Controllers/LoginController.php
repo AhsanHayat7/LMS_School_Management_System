@@ -27,15 +27,15 @@ class LoginController extends Controller
 
         if(\Auth::attempt($request->only('email','password'))){
 
-            if(Auth::user()->role_id){
+            if(Auth::user()->role_id == 1){
                  return redirect()->route('dashboard');
         }
-        //     elseif( Auth::user()->role_id == 2 ){
-        //         return redirect()->route('dashboard.students');
-        // }
-        //     elseif(Auth ::user()->role_id == 3){
-        //         return redirect()->route('dashboard.teachers');
-        //     }
+            elseif( Auth::user()->role_id == 2 ){
+                return redirect()->route('dashboard.students');
+        }
+            elseif(Auth ::user()->role_id == 3){
+                return redirect()->route('dashboard.teachers');
+            }
 
 
     }else{
